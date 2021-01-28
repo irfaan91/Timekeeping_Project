@@ -80,13 +80,6 @@ function getTime(){
 
 
 
-
-
-
-
-
-
-
 //GET FUNCTIONS
 
 //defualt page
@@ -186,6 +179,17 @@ app.get('/edit_notes', function (req, res) {
 		res.redirect('/login');
 	}
 });
+
+
+//sending data records to table
+app.get('/records', function(req, res){
+  res.send(record_database);
+});
+
+
+
+
+
 
 
 
