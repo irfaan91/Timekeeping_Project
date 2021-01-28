@@ -1,7 +1,7 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
-// var fs = require('fs');
+var fs = require('fs');
 var session = require('express-session');
 
 //middleware
@@ -26,6 +26,29 @@ var tech_database = [];
 var record_database = [];
 
 //UTILITY FUNCTIONS
+
+//adding data
+//creates local copy to be reloaded at start of server
+function addData(record){
+	record_database.push(record);
+	fs.writeFile("./database/data.json", JSON.stringify(record_database, null, 2), function(err){
+		if(err){return console.log(err);}
+	});
+}
+
+//reloading data from file storage
+function loadData(){
+	//clears current variable
+	record_database = [];
+	var obj;
+	fs.readFile("./database/data.json", 'utf8', function (err, data) {
+		if (err) throw err;
+		obj = JSON.parse(data);
+		for (var i = 0; i < obj.length; i++){
+			record_database.push(obj[i]);
+		}
+	});
+}
 
 //get date returns day/month/year in string format
 function getDate(){
@@ -74,7 +97,7 @@ app.get('/', function (req, res) {
 
 //main login page
 app.get('/login', function (req, res) {
-    res.render('login', { title: 'Please Login', site_number: '0101' });
+    res.render('login', { title: 'Login', site_number: '0101' });
 });
 
 //logout page
@@ -132,7 +155,7 @@ app.get('/clockin', function (req, res) {
 							type: 'IN',
 							location: req.session.location
 	};
-	record_database.push(clock_record);
+	addData(clock_record);
 	console.log(record_database);
 	//console.log(req.session.user+" "+ getDate() +" "+getTime() +" @ " + req.session.location);
 	req.session.clockedin = true;
@@ -150,7 +173,7 @@ app.get('/clockout', function (req, res) {
 							picture: '',
 							location: req.session.location
 	};
-	record_database.push(clock_record);
+	addData(clock_record);
 	console.log(record_database);
     res.redirect('/logout');
 });
@@ -168,6 +191,7 @@ app.get('/edit_notes', function (req, res) {
 
 //LISTENER
 app.listen(app.get('port'), function() {
+	loadData();
 	console.log('Server listening on port ' + app.get('port'));
 });
 

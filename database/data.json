@@ -1,0 +1,34 @@
+[
+  {
+    "tech": "Irfaan",
+    "date": "28/1/2021",
+    "time": "12:35PM",
+    "type": "IN",
+    "location": "0101"
+  },
+  {
+    "tech": "Irfaan",
+    "date": "28/1/2021",
+    "time": "12:35PM",
+    "type": "OUT",
+    "notes": "",
+    "picture": "",
+    "location": "0101"
+  },
+  {
+    "tech": "John",
+    "date": "28/1/2021",
+    "time": "12:38PM",
+    "type": "IN",
+    "location": "0101"
+  },
+  {
+    "tech": "John",
+    "date": "28/1/2021",
+    "time": "12:38PM",
+    "type": "OUT",
+    "notes": "",
+    "picture": "",
+    "location": "0101"
+  }
+]
