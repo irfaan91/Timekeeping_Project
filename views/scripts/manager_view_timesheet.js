@@ -1,7 +1,7 @@
 $(document).ready(function(){
 	$.ajax({
         type: 'GET',
-        url: '/records',
+        url: '/all_records',
         mimeType: 'json',
         success: function(data) {
             $.each(data, function(i, data) {
@@ -15,7 +15,7 @@ $(document).ready(function(){
                 body    += "<td>" + data.location + "</td>";
                 if(data.notes==''){
                     body    += "<td>" 
-                    +"<a href=\"/edit_tech\"> <button class=\"btn btn-primary\" type=\"button\">Edit</button></a>"
+                    +"<a href=\"#\"> <button class=\"btn btn-primary\" type=\"button\">View</button></a>"
                     + "</td>";
                 }else{
                     body    += "<td>" + "" + "</td>";

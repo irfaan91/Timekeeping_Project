@@ -1,63 +1,35 @@
 [
   {
+    "id": 0,
     "tech": "Irfaan",
     "date": "28/1/2021",
-    "time": "12:35PM",
+    "time": "3:41PM",
     "type": "IN",
     "location": "0101"
   },
   {
+    "id": 1,
     "tech": "Irfaan",
     "date": "28/1/2021",
-    "time": "12:35PM",
+    "time": "3:41PM",
     "type": "OUT",
     "notes": "",
     "picture": "",
     "location": "0101"
   },
   {
+    "id": 2,
     "tech": "John",
     "date": "28/1/2021",
-    "time": "12:38PM",
+    "time": "3:41PM",
     "type": "IN",
     "location": "0101"
   },
   {
+    "id": 3,
     "tech": "John",
     "date": "28/1/2021",
-    "time": "12:38PM",
-    "type": "OUT",
-    "notes": "",
-    "picture": "",
-    "location": "0101"
-  },
-  {
-    "tech": "Irfaan",
-    "date": "28/1/2021",
-    "time": "1:29PM",
-    "type": "IN",
-    "location": "0101"
-  },
-  {
-    "tech": "Irfaan",
-    "date": "28/1/2021",
-    "time": "1:29PM",
-    "type": "OUT",
-    "notes": "",
-    "picture": "",
-    "location": "0101"
-  },
-  {
-    "tech": "Irfaan",
-    "date": "28/1/2021",
-    "time": "2:0PM",
-    "type": "IN",
-    "location": "0101"
-  },
-  {
-    "tech": "Irfaan",
-    "date": "28/1/2021",
-    "time": "2:0PM",
+    "time": "3:41PM",
     "type": "OUT",
     "notes": "",
     "picture": "",

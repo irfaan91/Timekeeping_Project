@@ -3,6 +3,9 @@ var app = express();
 var bodyParser = require('body-parser');
 var fs = require('fs');
 var session = require('express-session');
+var multer = require('multer');
+
+
 
 //middleware
 app.use(express.static('public'));
@@ -10,6 +13,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(session({ 	secret: 'timekeeping',
 					resave: true,
 				    saveUninitialized: true}))
+var upload = multer({ storage: storage });
 
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
@@ -24,12 +28,24 @@ var defaultusers = [ {username: "admin", password: "admin", permission: 1},
 var site_database = [];
 var tech_database = [];
 var record_database = [];
+var record_id =0;
 
 //UTILITY FUNCTIONS
+
+//file storage for pictures
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null,  __dirname + '/uploads/pictures')
+  },
+  filename: function (req, file, cb) {
+    cb(null, 'PictureRecord-' + record_id + ".jpg")
+  }
+})
 
 //adding data
 //creates local copy to be reloaded at start of server
 function addData(record){
+	record_id++;
 	record_database.push(record);
 	fs.writeFile("./database/data.json", JSON.stringify(record_database, null, 2), function(err){
 		if(err){return console.log(err);}
@@ -46,9 +62,11 @@ function loadData(){
 		obj = JSON.parse(data);
 		for (var i = 0; i < obj.length; i++){
 			record_database.push(obj[i]);
+			record_id++;
 		}
 	});
 }
+
 
 //get date returns day/month/year in string format
 function getDate(){
@@ -89,6 +107,26 @@ function searchDatabase(tech){
     return data;
 }
 
+//record id lookup
+function searchID(ID){
+	var data = [];
+    for (var i=0; i < record_database.length; i++) {
+        if (record_database[i].id === ID) {
+            data.push(record_database[i]);
+        }
+    }
+    return data;
+}
+
+//updates notes and pictures
+function updateRecord(ID, newData){
+	searchID(ID).notes = newData.notes;
+	searchID(ID).picture = newData.picture;
+}
+
+
+
+
 
 
 //GET FUNCTIONS
@@ -117,7 +155,7 @@ app.get('/mainpage', function (req, res) {
 		res.redirect('/dashboard');
 	}else{	
 		if (req.session.permission<=5){
-			res.render('main_page', { title: 'Main Page' , clockedin: req.session.clockedin, site: req.session.location});
+			res.render('main_page', { title: 'Tech Dashboard' , clockedin: req.session.clockedin, site: req.session.location});
 		}else{
 			res.redirect('/login');
 		}
@@ -153,10 +191,11 @@ app.get('/view_timesheet', function (req, res) {
 
 //clockin function
 app.get('/clockin', function (req, res) {
-	var clock_record = {	tech : req.session.user,
+	var clock_record = {	id   : record_id,
+							tech : req.session.user,
 							date : getDate(),
 							time : getTime(),
-							type: 'IN',
+							type : 'IN',
 							location: req.session.location
 	};
 	addData(clock_record);
@@ -167,7 +206,8 @@ app.get('/clockin', function (req, res) {
 
 //clockout/logout function
 app.get('/clockout', function (req, res) {
-	var clock_record = {	tech : req.session.user,
+	var clock_record = {	id   : record_id,
+							tech : req.session.user,
 							date : getDate(),
 							time : getTime(),
 							type: 'OUT',
@@ -179,20 +219,14 @@ app.get('/clockout', function (req, res) {
     res.redirect('/logout');
 });
 
-//view/edit function
-app.get('/edit_notes', function (req, res) {
+//view records to edit
+app.get('/edit_timesheet_notes', function (req, res) {
 	if (req.session.permission<=4){
     	res.render('view_timesheet', { title: 'Timesheet' });
 	}else{
 		res.redirect('/login');
 	}
 });
-
-
-
-
-
-
 
 //sending data records to table
 app.get('/records', function(req, res){
@@ -204,7 +238,14 @@ app.get('/all_records', function(req, res){
   res.send(record_database);
 });
 
-
+//edit tech record
+app.get('/edit_tech', function (req, res) {
+	if (req.session.permission<=4){
+    	res.render('edit_notes', { title: 'Edit Site Notes' });
+	}else{
+		res.redirect('/login');
+	}
+});
 
 
 
@@ -217,6 +258,15 @@ app.listen(app.get('port'), function() {
 	loadData();
 	console.log('Server listening on port ' + app.get('port'));
 });
+
+
+
+
+
+
+
+
+
 
 
 
@@ -240,4 +290,30 @@ app.post('/login', function (req, res) {
 		//if no user is found and matched then re-render login page
 		res.redirect('/login');
 	}
+});
+
+//post edit note
+//FIX ME PLEASE
+//DOESNT WORK YET
+app.post('/edit_notes', upload.single('uploadimg'), function (req, res) {
+	var buttoninput = req.body.sub;
+	if(buttoninput == "submit"){
+		var notes = '';
+		if(req.body.notes){
+			notes = req.body.notes;
+		}
+		if(req.file){
+			var picture = req.file.filename;
+		}
+		var data = [{
+					picture: picture,
+					notes: notes
+				}];
+		var ID = 1;
+
+		updateRecord(ID, data);
+		res.redirect('/view_timesheet')
+	}else{
+		res.redirect('/view_timesheet');
+    }
 });
