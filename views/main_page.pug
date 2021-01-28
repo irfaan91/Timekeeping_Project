@@ -43,8 +43,12 @@ html
 							a(href="/clockin")
 								button.btn.btn-primary(type='button') CLOCK IN
 					div.form-group
-						a(href="/view_edit")
+						a(href="/edit_notes")
 							button.btn.btn-primary(type='button') VIEW/EDIT
 					div.form-group
-						a(href="/clockout")
-							button.btn.btn-primary(type='button') CLOCK OUT
+						if clockedin
+							a(href="/clockout")
+								button.btn.btn-primary(type='button') CLOCK OUT
+						else
+							a(href="/logout")
+								button.btn.btn-primary(type='button') LOGOUT

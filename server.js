@@ -156,7 +156,7 @@ app.get('/clockout', function (req, res) {
 });
 
 //view/edit function
-app.get('/view_edit', function (req, res) {
+app.get('/edit_notes', function (req, res) {
 	if (req.session.permission<=4){
     	res.render('view_timesheet', { title: 'Timesheet' });
 	}else{
