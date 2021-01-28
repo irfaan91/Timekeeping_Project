@@ -16,7 +16,6 @@ $(document).ready(function(){
                     body    += "<td>" 
                     +"<a href=\"#\"> <button class=\"btn btn-primary\" type=\"button\">Edit</button></a>"
                     + "</td>";
-                    // body    += "<td>" + "true" + "</td>";
                 }else{
                     body    += "<td>" + "" + "</td>";
                 }
@@ -30,6 +29,5 @@ $(document).ready(function(){
         error: function() {
             alert('Fail!');
         }
-        //.table-responsive
 	});
 });

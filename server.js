@@ -78,6 +78,17 @@ function getTime(){
 	return (curr_hour + ":" + curr_min + ampm);
 }
 
+//searching for user records
+function searchDatabase(tech){
+	var data = [];
+    for (var i=0; i < record_database.length; i++) {
+        if (record_database[i].tech === tech) {
+            data.push(record_database[i]);
+        }
+    }
+    return data;
+}
+
 
 
 //GET FUNCTIONS
@@ -149,8 +160,6 @@ app.get('/clockin', function (req, res) {
 							location: req.session.location
 	};
 	addData(clock_record);
-	console.log(record_database);
-	//console.log(req.session.user+" "+ getDate() +" "+getTime() +" @ " + req.session.location);
 	req.session.clockedin = true;
     res.redirect('/mainpage');
 });
@@ -167,7 +176,6 @@ app.get('/clockout', function (req, res) {
 							location: req.session.location
 	};
 	addData(clock_record);
-	console.log(record_database);
     res.redirect('/logout');
 });
 
@@ -181,10 +189,21 @@ app.get('/edit_notes', function (req, res) {
 });
 
 
+
+
+
+
+
 //sending data records to table
 app.get('/records', function(req, res){
+  res.send(searchDatabase(req.session.user));
+});
+
+//sending all data records to table (admin/manager)
+app.get('/all_records', function(req, res){
   res.send(record_database);
 });
+
 
 
 

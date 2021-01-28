@@ -30,5 +30,37 @@
     "notes": "",
     "picture": "",
     "location": "0101"
+  },
+  {
+    "tech": "Irfaan",
+    "date": "28/1/2021",
+    "time": "1:29PM",
+    "type": "IN",
+    "location": "0101"
+  },
+  {
+    "tech": "Irfaan",
+    "date": "28/1/2021",
+    "time": "1:29PM",
+    "type": "OUT",
+    "notes": "",
+    "picture": "",
+    "location": "0101"
+  },
+  {
+    "tech": "Irfaan",
+    "date": "28/1/2021",
+    "time": "2:0PM",
+    "type": "IN",
+    "location": "0101"
+  },
+  {
+    "tech": "Irfaan",
+    "date": "28/1/2021",
+    "time": "2:0PM",
+    "type": "OUT",
+    "notes": "",
+    "picture": "",
+    "location": "0101"
   }
 ]
