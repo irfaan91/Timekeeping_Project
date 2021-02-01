@@ -25,6 +25,14 @@ html
 		script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
 
 	body
+		block content
+			div.container-fluid
+				h1.display-4.m-b-2 Site Dashboard 
+					div.container-fluid.col-sm-10.content
+						a(href="/edit_notes/"+ rec_id)
+							button.btn.btn-primary(type='button') EDIT
+						a(href="/view_emp_timesheet")
+							button.btn.btn-primary(type='button') BACK
 		div.container-fluid.col-sm-10.content
 			h3 Record ID: 
 					=rec_id
@@ -42,6 +50,4 @@ html
 				div.container-fluid.col-sm-10.content
 					each pic in data.picture
 						img(src='/uploads/pictures' +'/' + pic, width="100%", alt='Img loading error')
-
-			a(href="/edit_notes/"+ rec_id)
-							button.btn.btn-primary(type='button') EDIT
+			
