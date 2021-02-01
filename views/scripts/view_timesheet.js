@@ -1,3 +1,7 @@
+function view_record(ID){
+    $(record_ID).val(ID);
+}  
+
 $(document).ready(function(){
 	$.ajax({
         type: 'GET',
@@ -6,16 +10,16 @@ $(document).ready(function(){
         success: function(data) {
             $.each(data, function(i, data) {
                 var body = "<tr>";
-                //date / time / tech / clock (type) / site(location) / notes
+                //id / date / time / tech / clock (type) / site(location) / notes
                 body    += "<td>" + data.id + "</td>";
                 body    += "<td>" + data.date + "</td>";
                 body    += "<td>" + data.time + "</td>";
                 body    += "<td>" + data.tech + "</td>";
                 body    += "<td>" + data.type + "</td>";
                 body    += "<td>" + data.location + "</td>";
-                if(data.notes==''){
+                if(data.type == "OUT"){
                     body    += "<td>" 
-                    +"<a href=\"/edit_tech\"> <button class=\"btn btn-primary\" type=\"button\">Edit</button></a>"
+                    +"<a href=\"/view_record/"+ data.id +" \"> <button class=\"btn btn-primary\" type=\"button\">View</button></a>"
                     + "</td>";
                 }else{
                     body    += "<td>" + "" + "</td>";

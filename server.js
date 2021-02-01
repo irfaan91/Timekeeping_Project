@@ -5,15 +5,14 @@ var fs = require('fs');
 var session = require('express-session');
 var multer = require('multer');
 
-
-
 //middleware
 app.use(express.static('public'));
+app.use('/uploads', express.static(__dirname + '/uploads/'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(session({ 	secret: 'timekeeping',
 					resave: true,
 				    saveUninitialized: true}))
-var upload = multer({ storage: storage });
+
 
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
@@ -35,12 +34,18 @@ var record_id =0;
 //file storage for pictures
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null,  __dirname + '/uploads/pictures')
+    cb(null,  __dirname + '/uploads/pictures/')
   },
   filename: function (req, file, cb) {
-    cb(null, 'PictureRecord-' + record_id + ".jpg")
+  	var currdate = new Date();
+	var curr_day = currdate.getDate();
+	var curr_month = (currdate.getMonth()+1);
+	var curr_year = currdate.getFullYear();
+    cb(null, 'PictureRecord-' + curr_day + "-" + curr_month + "-" + curr_year + "-" + Date.now() + ".jpg")
   }
 })
+
+var upload = multer({ storage: storage });
 
 //adding data
 //creates local copy to be reloaded at start of server
@@ -118,11 +123,32 @@ function searchID(ID){
     return data;
 }
 
-//updates notes and pictures
-function updateRecord(ID, newData){
-	searchID(ID).notes = newData.notes;
-	searchID(ID).picture = newData.picture;
+//update notes and pictures
+function updateRecord(ID, notes, pictures){
+    for (var i=0; i < record_database.length; i++) {
+        if (record_database[i].id === parseInt(ID)) {
+            record_database[i].notes = notes;
+            if(pictures){
+            	console.log("updating pictures");
+            	console.log(pictures);
+            	record_database[i].picture = [];
+            	for(var j = 0; j < pictures.length; j++){         		
+            		record_database[i].picture[j] = pictures[j];
+            	}
+            	console.log("new pics " + record_database[i].picture)
+            }
+        }
+    }
+	fs.writeFile("./database/data.json", JSON.stringify(record_database, null, 2), function(err){
+		if(err){return console.log(err);}
+	});
 }
+
+
+
+
+
+
 
 
 
@@ -162,14 +188,7 @@ app.get('/mainpage', function (req, res) {
 	}
 });
 
-//site notes page
-app.get('/notes', function (req, res) {
-	if (req.session.permission<=4){
-    	res.render('edit_notes', { title: 'Edit Site Notes' });
-	}else{
-		res.redirect('/login');
-	}
-});
+
 
 //manager dashboard page
 app.get('/dashboard',function (req, res){
@@ -220,7 +239,7 @@ app.get('/clockout', function (req, res) {
 });
 
 //view records to edit
-app.get('/edit_timesheet_notes', function (req, res) {
+app.get('/view_emp_timesheet', function (req, res) {
 	if (req.session.permission<=4){
     	res.render('view_timesheet', { title: 'Timesheet' });
 	}else{
@@ -236,6 +255,25 @@ app.get('/records', function(req, res){
 //sending all data records to table (admin/manager)
 app.get('/all_records', function(req, res){
   res.send(record_database);
+});
+
+
+//view record
+app.get('/view_record/:recordid', function (req, res) {
+	if (req.session.permission<=4){
+    	res.render('view_record', { title: 'Viewing Notes', data: record_database[req.params.recordid], rec_id: req.params.recordid });
+	}else{
+		res.redirect('/login');
+	}
+});
+
+//site notes page
+app.get('/edit_notes/:recordid', function (req, res) {
+	if (req.session.permission<=4){
+    	res.render('edit_notes', { title: 'Edit Site Notes', data: record_database[req.params.recordid], rec_id: req.params.recordid });
+	}else{
+		res.redirect('/login');
+	}
 });
 
 //edit tech record
@@ -293,27 +331,23 @@ app.post('/login', function (req, res) {
 });
 
 //post edit note
-//FIX ME PLEASE
-//DOESNT WORK YET
-app.post('/edit_notes', upload.single('uploadimg'), function (req, res) {
+app.post('/edit_note/:recordid', upload.array('uploadimg',10), function (req, res) {
 	var buttoninput = req.body.sub;
-	if(buttoninput == "submit"){
+	if(buttoninput === "submit"){
 		var notes = '';
 		if(req.body.notes){
 			notes = req.body.notes;
 		}
-		if(req.file){
-			var picture = req.file.filename;
+		var picture = '';
+		if(req.files){
+			var picture=[];
+			for (var i = 0; i < req.files.length; i++) {
+				picture[i] = req.files[i].filename;
+			}
 		}
-		var data = [{
-					picture: picture,
-					notes: notes
-				}];
-		var ID = 1;
-
-		updateRecord(ID, data);
-		res.redirect('/view_timesheet')
+		updateRecord(req.params.recordid, notes, picture);
+		res.redirect('/view_emp_timesheet')
 	}else{
-		res.redirect('/view_timesheet');
+		res.redirect('/view_emp_timesheet');
     }
 });

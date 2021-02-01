@@ -28,24 +28,25 @@ html
 	body
 		block content
 			div.col-sm-6
-				h1.display-4.m-b-2 Site Notes
-				
-				form(method="")
+				h1.display-4.m-b-2 Site Notes 
+				h3 Editing Record ID: 
+					=rec_id
+				form(method="post" action='/edit_note/'+rec_id enctype="multipart/form-data")
 					div.form-group.input-group.row.col-sm
 						div.input-group-prepend
 							span.input-group-text Notes:
 						textarea#notes.form-control(aria-label='Additional Details', name="notes")
+								=data.notes
 
 					div.form-group.row.col-sm
 						div.input-group
 							div.input-group-prepend
 								span.input-group-text Upload Image:
 							div.custom-file
-								input#uploadimg.custom-file-input(type="file" accept="image/*" name="uploadimg")
+								input#uploadimg.custom-file-input(type="file" accept="image/*" name="uploadimg" multiple)
 								label.custom-file-label(for="uploadimg") Choose image
 
 					div.form-group.row.col-sm.d-flex.justify-content-center
-						div.button-box
-							button.btn-lg.mr-2#btn.btn-primary(type="submit", name="sub") Submit
-							a(href="/view_timesheet")
-								button.btn-lg.ml-2.btn.btn-primary(type='button') Cancel
+					div.button-box
+						button.btn-lg.mr-2#Confirm.btn.btn-primary(type="submit", value="submit", name="sub") Confirm
+						button.btn-lg.ml-2#Cancel.btn.btn-primary(value="cancel", name="sub") Cancel

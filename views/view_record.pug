@@ -23,32 +23,25 @@ html
 				crossorigin="anonymous")
 			
 		script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
-		
 
 	body
-		block content
-			div.col-sm-6
-				h1.display-4.m-b-2 Main Menu
+		div.container-fluid.col-sm-10.content
+			h3 Record ID: 
+					=rec_id
+			input#record_ID.form-control(type="hidden" name='record_ID' value=rec_id readonly)
+			if data.notes
+				div.container-fluid.mainbox.bordered.col-sm-10
+					div.title Notes
+				div.container-fluid.col-sm-10.content
+					=data.notes
 				
-				form(method="")
-					div.form-group
-						a(href="/")
-							button.btn.btn-primary(type='button', disabled) SITE 
-																					site=site
-					div.form-group
-						if clockedin
-							a(href="/clockin")
-								button.btn.btn-primary(type='button' disabled) CLOCK IN
-						else
-							a(href="/clockin")
-								button.btn.btn-primary(type='button') CLOCK IN
-					div.form-group
-						a(href="/view_emp_timesheet")
-							button.btn.btn-primary(type='button') VIEW/EDIT NOTES
-					div.form-group
-						if clockedin
-							a(href="/clockout")
-								button.btn.btn-primary(type='button') CLOCK OUT
-						else
-							a(href="/logout")
-								button.btn.btn-primary(type='button') LOGOUT
+			
+			if data.picture
+				div.container-fluid.mainbox.bordered.col-sm-10
+					div.title Picture
+				div.container-fluid.col-sm-10.content
+					each pic in data.picture
+						img(src='/uploads/pictures' +'/' + pic, width="100%", alt='Img loading error')
+
+			a(href="/edit_notes/"+ rec_id)
+							button.btn.btn-primary(type='button') EDIT

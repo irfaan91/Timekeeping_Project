@@ -2,34 +2,109 @@
   {
     "id": 0,
     "tech": "Irfaan",
-    "date": "28/1/2021",
-    "time": "3:41PM",
+    "date": "29/1/2021",
+    "time": "12:16PM",
     "type": "IN",
     "location": "0101"
   },
   {
     "id": 1,
     "tech": "Irfaan",
-    "date": "28/1/2021",
-    "time": "3:41PM",
+    "date": "29/1/2021",
+    "time": "12:16PM",
+    "type": "OUT",
+    "location": "0101",
+    "notes": "dfgssddsfsdfsfsdfsdf",
+    "picture": [
+      "PictureRecord-1-2-2021-1612204315392.jpg",
+      "PictureRecord-1-2-2021-1612204315393.jpg"
+    ]
+  },
+  {
+    "id": 2,
+    "tech": "Irfaan",
+    "date": "29/1/2021",
+    "time": "2:27PM",
+    "type": "IN",
+    "location": "0101"
+  },
+  {
+    "id": 3,
+    "tech": "Irfaan",
+    "date": "29/1/2021",
+    "time": "2:27PM",
+    "type": "OUT",
+    "notes": "record 3",
+    "picture": "",
+    "location": "0101"
+  },
+  {
+    "id": 4,
+    "tech": "Irfaan",
+    "date": "29/1/2021",
+    "time": "2:37PM",
+    "type": "IN",
+    "location": "0101"
+  },
+  {
+    "id": 5,
+    "tech": "Irfaan",
+    "date": "29/1/2021",
+    "time": "2:37PM",
+    "type": "OUT",
+    "notes": "record 5",
+    "picture": "",
+    "location": "0101"
+  },
+  {
+    "id": 6,
+    "tech": "John",
+    "date": "1/2/2021",
+    "time": "11:8AM",
+    "type": "IN",
+    "location": "0101"
+  },
+  {
+    "id": 7,
+    "tech": "John",
+    "date": "1/2/2021",
+    "time": "11:8AM",
     "type": "OUT",
     "notes": "",
     "picture": "",
     "location": "0101"
   },
   {
-    "id": 2,
-    "tech": "John",
-    "date": "28/1/2021",
-    "time": "3:41PM",
+    "id": 8,
+    "tech": "Irfaan",
+    "date": "1/2/2021",
+    "time": "11:8AM",
     "type": "IN",
     "location": "0101"
   },
   {
-    "id": 3,
-    "tech": "John",
-    "date": "28/1/2021",
-    "time": "3:41PM",
+    "id": 9,
+    "tech": "Irfaan",
+    "date": "1/2/2021",
+    "time": "11:8AM",
+    "type": "OUT",
+    "notes": "",
+    "picture": "",
+    "location": "0101"
+  },
+  {
+    "id": 10,
+    "tech": "Irfaan",
+    "date": "1/2/2021",
+    "time": "11:41AM",
+    "type": "IN",
+    "location": "0101"
+  },
+  {
+    "id": 11,
+    "tech": "Irfaan",
+    "date": "1/2/2021",
+    "time": "11:41AM",
     "type": "OUT",
     "notes": "",
     "picture": "",
