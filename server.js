@@ -129,13 +129,10 @@ function updateRecord(ID, notes, pictures){
         if (record_database[i].id === parseInt(ID)) {
             record_database[i].notes = notes;
             if(pictures){
-            	console.log("updating pictures");
-            	console.log(pictures);
             	record_database[i].picture = [];
             	for(var j = 0; j < pictures.length; j++){         		
             		record_database[i].picture[j] = pictures[j];
             	}
-            	console.log("new pics " + record_database[i].picture)
             }
         }
     }
