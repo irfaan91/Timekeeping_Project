@@ -31,24 +31,32 @@ html
 				h1.display-4.m-b-2 Main Menu
 				
 				form(method="")
-					div.form-group
-						a(href="/")
+					if site
+						div.form-group
 							button.btn.btn-primary(type='button', disabled) SITE 
-																					site=site
-					div.form-group
-						if clockedin
-							a(href="/clockin")
-								button.btn.btn-primary(type='button' disabled) CLOCK IN
-						else
-							a(href="/clockin")
-								button.btn.btn-primary(type='button') CLOCK IN
-					div.form-group
-						a(href="/view_emp_timesheet")
-							button.btn.btn-primary(type='button') VIEW/EDIT NOTES
-					div.form-group
-						if clockedin
-							a(href="/clockout")
-								button.btn.btn-primary(type='button') CLOCK OUT
-						else
+																				site=site
+						div.form-group
+							if clockedin
+								a(href="/clockin")
+									button.btn.btn-primary(type='button' disabled) CLOCK IN
+							else
+								a(href="/clockin")
+									button.btn.btn-primary(type='button') CLOCK IN
+						div.form-group
+							a(href="/view_emp_timesheet")
+								button.btn.btn-primary(type='button') VIEW/EDIT NOTES
+						div.form-group
+							if clockedin
+								a(href="/clockout")
+									button.btn.btn-primary(type='button') CLOCK OUT
+							else
+								a(href="/logout")
+									button.btn.btn-primary(type='button') LOGOUT
+					else
+						div.form-group
+							a(href="/view_emp_timesheet")
+								button.btn.btn-primary(type='button') VIEW/EDIT NOTES
+						div.form-group
 							a(href="/logout")
-								button.btn.btn-primary(type='button') LOGOUT
+									button.btn.btn-primary(type='button') LOGOUT
+					

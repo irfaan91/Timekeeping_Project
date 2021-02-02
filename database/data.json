@@ -109,5 +109,23 @@
     "notes": "",
     "picture": "",
     "location": "0101"
+  },
+  {
+    "id": 12,
+    "tech": "Irfaan",
+    "date": "2/2/2021",
+    "time": "11:13AM",
+    "type": "IN",
+    "location": "90210"
+  },
+  {
+    "id": 13,
+    "tech": "Irfaan",
+    "date": "2/2/2021",
+    "time": "11:13AM",
+    "type": "OUT",
+    "notes": "",
+    "picture": "",
+    "location": "90210"
   }
 ]

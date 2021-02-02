@@ -162,7 +162,12 @@ app.get('/', function (req, res) {
 
 //main login page
 app.get('/login', function (req, res) {
-    res.render('login', { title: 'Login', site_number: '0101' });
+    res.render('login', { title: 'Login' });
+});
+
+//site login page
+app.get('/login/*', function (req, res) {
+    res.render('login', { title: 'Login', site_number: req.params[0] });
 });
 
 //logout page
@@ -178,7 +183,11 @@ app.get('/mainpage', function (req, res) {
 		res.redirect('/dashboard');
 	}else{	
 		if (req.session.permission<=5){
-			res.render('main_page', { title: 'Tech Dashboard' , clockedin: req.session.clockedin, site: req.session.location});
+			if(req.session.location === ''){
+				res.render('main_page', { title: 'Tech Dashboard' , clockedin: req.session.clockedin});
+			}else{
+				res.render('main_page', { title: 'Tech Dashboard' , clockedin: req.session.clockedin, site: req.session.location});
+			}
 		}else{
 			res.redirect('/login');
 		}

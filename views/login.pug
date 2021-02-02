@@ -28,13 +28,19 @@ html
 	body
 		block content
 			div.col-sm-6
-				h1.display-4.m-b-2 Login Site 
-										location= site_number
+				if site_number
+					h1.display-4.m-b-2 Login Site 
+											location= site_number
+				else
+					h1.display-4.m-b-2 Login
 				
 				
 				form(method="post" action='/login')
 					div.form-group
-						input#location.form-control(type='text',value= site_number, name='location' readonly hidden)
+						if site_number
+							input#location.form-control(type='hidden',value= site_number, name='location' readonly)
+						else
+							input#location.form-control(type='hidden',value= '', name='location' readonly)
 					div.form-group
 						label(for='username') Username:
 						input#username.form-control(type='text', placeholder='Username' name='username')
